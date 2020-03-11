@@ -14,25 +14,35 @@ const answers = [
     ["Texel", "Vlieland", "Terschelling", "Ameland", "Schiermonnikoog"],
 ];
 
-document.getElementById("france_q").innerHTML = questions[0];
-document.getElementById("spider_q").innerHTML = questions[1];
-document.getElementById("lake_q").innerHTML = questions[2];
-document.getElementById("auto_q").innerHTML = questions[3];
-document.getElementById("island_q").innerHTML = questions[4];
+for(let i = 0;i<questions.length;i++){
+    document.getElementById("questions").innerHTML += "<h3>"+questions[i]+"</h3>";
+    document.getElementById("questions").innerHTML += "<input type='text' id='a_"+i+"'>";
+}
 
 function checkAnswers() {
     let user_answers = [];
-    user_answers.push(document.getElementById("france").value);
-    user_answers.push(document.getElementById("spider").value);
-    user_answers.push(document.getElementById("lake").value);
-    user_answers.push(document.getElementById("auto").value);
-    user_answers.push(document.getElementById("island").value);
-
-    if(answers.includes(user_answers[0]) && answers.includes(user_answers[1]) && answers.includes(user_answers[2])
-        && answers[3].includes(user_answers[3]) && answers[4].includes(user_answers[4])){
-        document.getElementById("answer").innerHTML = "Alle antwoorden zijn correct!";
-    }else {
-        document.getElementById("answer").innerHTML = "Niet alle antwoorden zijn correct.";
+    let correct = [];
+    for(let i = 0;i<questions.length;i++){
+        user_answers[i] = (document.getElementById("a_"+i).value);
+        if(i > 2){
+            if(answers[i].includes(user_answers[i])) {
+                correct[i] = answers[i];
+            }
+        }else {
+            if(answers.includes(user_answers[i])) {
+                correct[i] = answers[i];
+            }
+        }
     }
+
+    document.getElementById("answer").innerHTML = "Antwoorden goed: ";
+    for(let i = 0;i<correct.length;i++){
+        if(i > 0){
+            document.getElementById("answer").innerHTML += ", ";
+        }
+        document.getElementById("answer").innerHTML += correct[i];
+    }
+
+    document.getElementById("answer2").innerHTML = "Je hebt "+correct.length+" antwoorden goed!";
 
 }
